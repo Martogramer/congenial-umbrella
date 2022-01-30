@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
+//Tabla de generos solo pide nombre e id
 
 module.exports = (sequelize) => {
+    
     sequelize.define('genres', {
         id: {
             type: DataTypes.INTEGER,
