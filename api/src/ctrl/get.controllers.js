@@ -35,6 +35,9 @@ const getAllInfo = async ()=> {
     return info;
 }
 
+
+
+
 module.exports = {
     getAllInfo,
 }
