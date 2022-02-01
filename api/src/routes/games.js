@@ -3,7 +3,7 @@ const { Router } = require("express");
 
 const router = Router();
 
-const getByName = async (req, res, next) => {
+const getByName = async (req, res) => {
   const name = req.query.name;
   const allGames = await getAllInfo();
 
