@@ -2,8 +2,8 @@ const { getAllInfo } = require("../ctrl/get.controllers");
 const { Router } = require("express");
 const { URL_GAMES } = require("../globals/globals");
 const axios = require("axios");
-const { Genres } = require("../models/Genres");
-const { Videogame } = require("../models/Videogame");
+const { Genres } = require("../db");
+const { Videogame } = require("../db");
 
 const router = Router();
 
@@ -18,10 +18,8 @@ const getByName = async (req, res) => {
     if (!name) {
       return res.status(200).send(allGames);
     } else {
-      const game = allGames.filter((e) =>
-        e.name.toLowerCase().includes(name.toLowerCase())
-      );
-      game.lenght
+      const game = allGames.filter(name.includes(name));
+      return game.lenght
         ? res.status(200).json(game)
         : res.status(404).send("No Se Encontraron Resultados");
     }
