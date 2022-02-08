@@ -11,7 +11,7 @@ const router = Router();
 
 
 const getByName = async (req, res) => {
-  const name = req.query.name;
+  const {name}= req.query;
   const allGames = await getAllInfo();
 
   try {
