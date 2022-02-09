@@ -9,3 +9,10 @@ export function getGames(){
         })
     }
 }
+
+export function loadingLoad(payload){
+    return{
+        type: 'LOAD_GAMES',
+        payload
+    }
+}
