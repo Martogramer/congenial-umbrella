@@ -9,8 +9,8 @@ import Landing from './components/landing/Landing';
   return (
     <Fragment>
     <Routes>
+      <Route exact path="/home" element={<Home />} />
       <Route path="/" element={<Landing />} />
-      <Route path="/home" element={<Home />} />
     </Routes>
   </Fragment>
   );
