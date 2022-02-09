@@ -1,30 +1,42 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getGames } from '../../actions';
+import {Link} from 'react-router-dom'
+
+import { getGames, loadingLoad } from '../../actions';
 
 
-export default function Home (){
-    const dispatch= useDispatch()
-    const games = useSelector((state)=>state.games)
+Videogames=()=>{
+    let games=useSelector((state)=>state.games)
+    let loading=useSelector((state)=>state.loading)
+    const [videogames, setVideogames]=useState([]);
 
-    useEffect (()=>{
-        dispatch(getGames())
-    }, [])
+    const [order, setOrder] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
 
-    function handleClick(e) {
-        e.preventDefault();
-        dispatch(getGames())
+    const [gamesXPage]=useState(15)
+
+    const indexOfLastGame = currentPage * gamesXPage
+    const indexOfFirstGame = indexOfLastGame - gamesXPage
+    const currentGame = games.slice(indexOfFirstGame, indexOfLastGame)
+
+    const pagination=(pageNumber)=>{
+        setCurrentPage(pageNumber)
     }
+
+    let dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getGames())
+        dispatch(loadingLoad())  // o seteado en true
+    }, [])
 
 
     return (
         <div>
-            <button onClick={handleClick()}>
-                Refresh
-            </button>
+
+        
+
+
+
         </div>
     )
-
 }
-
