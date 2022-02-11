@@ -6,7 +6,7 @@ const Landing=()=> {
     return (
         <div>
             <a>Videogames</a><br/>
-            <Link to='/home'><button>Home</button></Link>
+            <Link to='/games'><button>Home</button></Link>
         </div>
     );
 }
