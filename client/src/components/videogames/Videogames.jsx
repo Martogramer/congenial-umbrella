@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom'
 
-import { getGames, loadingLoad } from '../../actions';
+import { getGames, loadingLoad } from '../../redux/actions/index';
 import Filter from '../filter/Filter';
 import Card from '../card/Card';
 import Pagination from '../pagination/Pagination';
