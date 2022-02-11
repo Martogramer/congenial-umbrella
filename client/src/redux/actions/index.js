@@ -6,11 +6,10 @@ export const LOAD_GAMES = 'LOAD_GAMES'
 
 export const getGames=()=>async(dispatch)=>{
     try {
-        const res = await fetch('http://localhost:3001/games')
-        const data = res.json()
+        const res = await axios.get('http://localhost:3001/games')
         dispatch({
             type: GET_GAMES,
-            payload: data
+            payload: res.data
         })
     } catch (err){return err}
 }

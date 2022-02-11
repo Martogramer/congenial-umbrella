@@ -1,4 +1,4 @@
-import { GET_GAMES, LOAD_GAMES } from "../actions";
+import { GET_GAMES, LOAD_GAMES } from "../actions/index";
 
 const initialState = {
     games : [],
