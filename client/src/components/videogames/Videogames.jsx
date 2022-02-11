@@ -19,8 +19,6 @@ function Videogames(){
         asdasf
         <button onClick={() => dispatch(getGames())}>games</button>
         
-
-
         </div>
     )
 }
