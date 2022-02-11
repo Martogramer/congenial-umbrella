@@ -1,7 +1,7 @@
 import { GET_GAMES, LOAD_GAMES } from "../actions";
 
 const initialState = {
-    videogames: [],
+    games : [],
     loading: false
 }
 
@@ -11,9 +11,12 @@ function rootReducer (state = initialState, action) {
         case GET_GAMES:
             return {
                 ...state,
-                videogames: action.payload,
-                allGames: action.payload
+                games: action.payload,
+                
             }
+        default:
+            return state
+
         case LOAD_GAMES:
             return {
                 ...state,
