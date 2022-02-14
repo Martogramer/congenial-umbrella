@@ -1,7 +1,7 @@
+const axios = require("axios");
 const { getAllInfo } = require("../ctrl/get.controllers");
 const { Router } = require("express");
 const { URL_GAMES, URL_SEARCH } = require("../globals/globals");
-const axios = require("axios");
 const { Genres } = require("../models/Genres");
 const { Videogame } = require("../models/Videogame");
 
@@ -18,8 +18,7 @@ const getByName = async (req, res) => {
     if (!name) {
       return res.status(200).send(allGames);
     } else {
-
-      const games = axios.get(URL_SEARCH + `&search=${name}`).then((e)=>{
+      /* const games = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).then((e)=>{
         return e.data.results
       })
       const gamesDb= await Videogame.findAll({
@@ -29,14 +28,14 @@ const getByName = async (req, res) => {
             [Op.iLike]: "%" + name + "%"
           }
         } 
-      })
+      }) */
 
-/*       const game = allGames.filter((e) =>
+      const game = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).filter((e) =>
         e.name.toLowerCase().includes(name.toLowerCase())
       );
       game.lenght
         ? res.status(200).json(game)
-        : res.status(404).send("No Se Encontraron Resultados"); */
+        : res.status(404).send("No Se Encontraron Resultados");
     }
   } catch (err) {
     return err;
