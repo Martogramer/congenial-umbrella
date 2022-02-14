@@ -1,4 +1,4 @@
-import { GET_GAMES, LOAD_GAMES } from "../actions/index";
+import { GET_GAMES, LOAD_GAMES, SEARCH_GAMES } from "../actions/index";
 
 const initialState = {
     games : [],
@@ -21,6 +21,12 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 loading: action.payload
+            }
+
+        case SEARCH_GAMES:
+            return {
+                ...state,
+                games: action.payload
             }
 
     }
