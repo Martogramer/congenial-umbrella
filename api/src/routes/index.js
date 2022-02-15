@@ -6,7 +6,7 @@ const getById = require('./games');
 const router = Router();
 
 router.use("/games", getByName);
-router.use("/games?name=", getByName)
+//router.use("/games?name=", getByName)
 router.use("/genres", getByGenres)
 router.use("/post", postGames)
 router.use("/games/:id", getById)
