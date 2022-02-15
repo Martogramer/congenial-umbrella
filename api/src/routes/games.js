@@ -13,6 +13,7 @@ const router = Router();
 const getByName = async (req, res) => {
   const {name} = req.query;
   const allGames = await getAllInfo();
+  console.log(name)
 
   try {
     if (!name) {
@@ -30,7 +31,7 @@ const getByName = async (req, res) => {
         } 
       }) */
 
-      const game = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).filter((e) =>
+      const game = allGames.filter((e) =>
         e.name.toLowerCase().includes(name.toLowerCase())
       );
       game.lenght
@@ -40,6 +41,7 @@ const getByName = async (req, res) => {
   } catch (err) {
     return err;
   }
+
 };
 router.get("/", getByName);
 
