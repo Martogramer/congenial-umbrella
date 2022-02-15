@@ -15,7 +15,7 @@ export const getGames=()=>async(dispatch)=>{
     } catch (err){return err}
 }
 
-export function loadingLoad(payload){
+export function loading(payload){
     return{
         type: LOAD_GAMES,
         payload
