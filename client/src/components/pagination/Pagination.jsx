@@ -1,22 +1,22 @@
 import React from "react";
 
-const Pagination=({gamesXPage, allGames, paginate})=>{
+const Pagination=({gamesXPage, allGames, paginate, currentPage})=>{
     const pageNumber = []
-    for(let i=0; i< Math.ceil(allGames / gamesXPage); i++){
-        pageNumber.push(i+1);
+    for(let i=1; i< Math.ceil(allGames / gamesXPage); i++){
+        pageNumber.push(i)
     }
 
     return(
-        <nav>
+        <div>
             <ul>
-                {pageNumber.length > 1 &&
-                pageNumber.map(number =>(
-                    <li key={number}>
-                        <button onClick={()=>paginate(number)}>{number}</button>
+                {pageNumber ?
+                pageNumber.map(num =>(
+                    <li key={num}>
+                        <a href='#top' onClick={()=>paginate(num)} id={(currentPage === num)}>{num}</a>
                     </li>
-                ))}
+                )) : null }
             </ul>
-        </nav>
+        </div>
     )
 }
 export default Pagination
