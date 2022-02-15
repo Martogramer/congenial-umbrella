@@ -12,6 +12,18 @@ function Videogames(){
 
     const dispatch = useDispatch()
     const games = useSelector(store => store.games)
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [gamesXPage] = useState(6);
+    const indexOfLastGame = currentPage * gamesXPage;
+    const indexOfFirstGame = indexOfLastGame - gamesXPage;
+    const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
+
+    const paginado = (pageNumber) =>{
+        setCurrentPage(pageNumber);
+    }
+
+
     
 
     return (
@@ -22,7 +34,7 @@ function Videogames(){
 
         <div className={styles.card}>
         {
-            games.map(game=>(
+            currentGames?.map(game=>(
                 <Card key={game.id}
                         name={game.name}
                         image={game.background_image}
@@ -31,6 +43,9 @@ function Videogames(){
                 ))
             }    
         </div>
+
+        <Pagination gamesXPage={gamesXPage} allGames={games.length} paginado={paginado}/>
+
         </div>
     )
 }
