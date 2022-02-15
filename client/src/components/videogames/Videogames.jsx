@@ -31,10 +31,6 @@ function Videogames(){
                 ))
             }    
         </div>
-
-            
-
-
         </div>
     )
 }
