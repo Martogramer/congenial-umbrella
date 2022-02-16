@@ -3,17 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import styles from './Games.module.css'
 
-import { getGames, loadingLoad } from '../../redux/actions/index';
+import { getGames, loading } from '../../redux/actions/index';
 import Filter from '../filter/Filter';
 import Card from '../card/Card';
 import Pagination from '../pagination/Pagination';
 import Navbar from '../navbar/Navbar';
+import Loading from '../loading/Loading';
 
 function Videogames() {
 
     const dispatch = useDispatch()
+        useEffect(()=>{
+            dispatch(getGames())
+            dispatch(loading(true))
+        }, [])
     const games = useSelector(store => store.games)
-
+    const loadingLoad = useSelector((state)=>state.loading)
     const [currentPage, setCurrentPage] = useState(1);
     const [gamesXPage] = useState(6);
     const indexOfLastGame = currentPage * gamesXPage;
@@ -26,17 +31,26 @@ function Videogames() {
     return (
         <div className={styles.container}>
             <Navbar />
-            <div className={styles.card}>
+            
+            {!loadingLoad
+                ?
+                <div className={styles.card}>
                 {
                     currentGames?.map(game => (
                         <Card key={game.id}
-                            name={game.name}
-                            image={game.background_image}
-                            genres={game.genres.map(g => g.name)}
+                        name={game.name}
+                        image={game.background_image}
+                        genres={game.genres.map(g => g.name)}
                         />
-                    ))
+                        ))
                 }
             </div>
+            :
+            <Loading />
+                    }
+
+
+
             <Pagination gamesXPage={gamesXPage} allGames={games.length} paginate={paginate} currentPage={currentPage} />
         </div>
     )
