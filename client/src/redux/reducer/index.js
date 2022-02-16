@@ -1,4 +1,4 @@
-import { GET_GAMES, LOAD_GAMES, SEARCH_GAMES } from "../actions/index";
+import { GET_GAMES, LOAD_GAMES, SEARCH_GAMES, GET_GAMES_BY_ID } from "../actions/index";
 
 const initialState = {
     games : [],
@@ -14,8 +14,12 @@ function rootReducer (state = initialState, action) {
                 games: action.payload,
                 
             }
-        default:
-            return state
+
+        case GET_GAMES_BY_ID:
+            return{
+                ...state,
+                game: action.payload
+            }
 
         case LOAD_GAMES:
             return {
@@ -28,6 +32,8 @@ function rootReducer (state = initialState, action) {
                 ...state,
                 games: action.payload
             }
+            default:
+                return state
 
     }
 }
