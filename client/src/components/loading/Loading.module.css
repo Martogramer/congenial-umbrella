@@ -16,11 +16,11 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #fff;
+    background: rgba(52, 74, 238, 0.809);
     margin: -4px 0 0 -4px;
 }
 .lds_roller div:nth-child(1) {
-    animation-delay: -0.036s;
+    animation-delay: -0.035s;
 }
 .lds_roller div:nth-child(1):after {
     top: 63px;
