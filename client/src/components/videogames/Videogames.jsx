@@ -10,17 +10,26 @@ import Pagination from '../pagination/Pagination';
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
 
+
+
+
+
 function Videogames() {
 
     const dispatch = useDispatch()
         useEffect(()=>{
             dispatch(getGames())
             dispatch(loading(true))
-        }, [])
-    const games = useSelector(store => store.games)
-    const loadingLoad = useSelector((state)=>state.loading)
+        }, [dispatch])
+
+
+        const games = useSelector(store => store.games)
+        const loadingLoad = useSelector((state)=>state.loading)
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const [gamesXPage] = useState(6);
+
     const indexOfLastGame = currentPage * gamesXPage;
     const indexOfFirstGame = indexOfLastGame - gamesXPage;
     const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
@@ -28,6 +37,7 @@ function Videogames() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
+
     return (
         <div className={styles.container}>
             <Navbar />
@@ -37,19 +47,18 @@ function Videogames() {
                 <div className={styles.card}>
                 {
                     currentGames?.map(game => (
+                        <Link className={styles.link} key={game.id} to={`/games/${game.id}`}>
                         <Card key={game.id}
                         name={game.name}
                         image={game.background_image}
                         genres={game.genres.map(g => g.name)}
-                        />
+                        /></Link>
                         ))
                 }
             </div>
             :
             <Loading />
                     }
-
-
 
             <Pagination gamesXPage={gamesXPage} allGames={games.length} paginate={paginate} currentPage={currentPage} />
         </div>
