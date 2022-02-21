@@ -43,7 +43,7 @@ export function getGamesById(id) {
                     type: GET_GAMES_BY_ID,
                     payload: res.data
                 })
-                dispatch()
+                dispatch(loading(false))
             })
             .catch((err)=>{console.log(err)})
     }
