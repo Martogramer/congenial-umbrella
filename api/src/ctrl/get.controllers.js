@@ -3,8 +3,22 @@ const { API_KEY } = process.env;
 const {Videogame, Genres} = require('../db')
 
 const getApiInfo = async ()=> {
-    const url = await axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2`)
-    const info = url.data.results.map(ar=>{
+    
+    let cero = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&page=1`)
+    let uno = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&page=2`)
+    let dos = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&page=3`)
+    let tres = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&page=4`)
+    let cuatro = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&page=5`)
+    
+    const url = await Promise.all([cero, uno, dos, tres, cuatro]);
+    cero = url[0].data.results
+    uno = url[1].data.results
+    dos=url[2].data.results
+    tres=url[3].data.results
+    cuatro=url[4].data.results
+    const urlTotal= cero.concat(uno).concat(dos).concat(tres).concat(cuatro);
+    
+    const info = urlTotal.map(ar=>{
         return {
             id: ar.id,
             name: ar.name,
@@ -19,24 +33,24 @@ const getApiInfo = async ()=> {
 }
 
 const getDbInfo = async ()=> {
-    return await Videogame.findAll({
+    const infoDb = await Videogame.findAll({
         include: {
             model: Genres,
             attributes: ['name'],
+            through: {
+                attributes:[]
+            }
         }
     })
+    return infoDb
 }
 
 const getAllInfo = async ()=> {
     const api = await getApiInfo();
     const db = await getDbInfo();
-    //const info = api.concat(db);
-    return [...api, ...db]
-    return info;
+    const infoTotal = api.concat(db);
+    return infoTotal
 }
-
-
-
 
 module.exports = {
     getAllInfo,
