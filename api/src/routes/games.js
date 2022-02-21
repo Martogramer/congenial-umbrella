@@ -10,40 +10,40 @@ const router = Router();
 
 
 
-const getByName = async (req, res) => {
+const getByName = async (req, res, next) => {
   const {name} = req.query;
   const allGames = await getAllInfo();
-  console.log(name)
+
 
   try {
     if (!name) {
       return res.status(200).send(allGames);
-    } else {
-      /* const games = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).then((e)=>{
-        return e.data.results
-      })
-      const gamesDb= await Videogame.findAll({
-        include: Genres,
-        where: {
-          name: {
-            [Op.iLike]: "%" + name + "%"
-          }
-        } 
-      }) */
-
+      next()
+    } else {      
       const game = allGames.filter((e) =>
-        e.name.toLowerCase().includes(name.toLowerCase())
-      );
+      e.name.toLowerCase().includes(name.toLowerCase()));
       game.lenght
-        ? res.status(200).json(game)
-        : res.status(404).send("No Se Encontraron Resultados");
+      ? res.status(200).json(game.slice())
+      : res.status(404).send("No Se Encontraron Resultados");
     }
   } catch (err) {
     return err;
   }
 
+
+  /* const games = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).then((e)=>{
+    return e.data.results
+  })
+  const gamesDb= await Videogame.findAll({
+    include: Genres,
+    where: {
+      name: {
+        [Op.iLike]: "%" + name + "%"
+      }
+    } 
+  }) */  
 };
-router.get("/", getByName);
+router.get('/', getByName);
 
 
 const getByGenres = async (req, res) => {
@@ -87,8 +87,11 @@ const postGames = async (req, res) => {
 }
 router.post("/", postGames);
 
+
+
+
 const getById = async (req, res) => {
-  const id = req.params.id;
+  const {id} = req.params;
   const allGames = await getAllInfo()
   if(id) {
     const gamesId = await allGames.filter(a=>a.id == id)
@@ -97,7 +100,7 @@ const getById = async (req, res) => {
     res.status(400).send('No Se Encontro El Id')
   }
 }
-router.get("/", getById);
+router.get("/:id", getById);
 
 
 module.exports = router;
