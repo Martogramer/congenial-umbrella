@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './Pagination.module.css'
 
 const Pagination=({gamesXPage, allGames, paginate, currentPage})=>{
     const pageNumber = []
@@ -7,11 +8,11 @@ const Pagination=({gamesXPage, allGames, paginate, currentPage})=>{
     }
 
     return(
-        <div>
-            <ul>
+        <div className={styles.container}>
+            <ul className={styles.pagination}>
                 {pageNumber ?
                 pageNumber.map(num =>(
-                    <li key={num}>
+                    <li key={num} className={styles.page_numbers}>
                         <a href='#top' onClick={()=>paginate(num)} id={(currentPage === num)}>{num}</a>
                     </li>
                 )) : null }
