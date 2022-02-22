@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { getAllInfo } = require("../ctrl/get.controllers");
 const { Router } = require("express");
+const { Op } = require('sequelize')
 const { URL_GAMES, URL_SEARCH } = require("../globals/globals");
 const { Genres } = require("../models/Genres");
 const { Videogame } = require("../models/Videogame");
@@ -13,24 +14,72 @@ const router = Router();
 const getByName = async (req, res, next) => {
   const {name} = req.query;
   const allGames = await getAllInfo();
-
-
-  try {
-    if (!name) {
-      return res.status(200).send(allGames);
-      next()
-    } else {      
-      const game = allGames.filter((e) =>
-      e.name.toLowerCase().includes(name.toLowerCase()));
-      game.lenght
-      ? res.status(200).json(game.slice())
-      : res.status(404).send("No Se Encontraron Resultados");
+    try {
+      if (!name) {
+        return res.status(200).send(allGames);
+        next()
+      } else {   
+        
+        const game= axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`)
+        game.filter((e) =>
+        e.name.toLowerCase().includes(name.toLowerCase()));
+        game.lenght
+        ? res.status(200).json(game())
+        : res.status(404).send("No Se Encontraron Resultados");
+      }
+    } catch (err) {
+      return err;
     }
-  } catch (err) {
-    return err;
-  }
 
 
+
+
+
+/*   let gamesApi
+  let gamesDb
+    if(name){
+      gamesApi=axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).then((a)=>{return a.data.results})
+      gamesDb= await Videogame.findAll({
+        include: Genres,
+        where: {
+          name: {
+            [Op.iLike]: "%" + name + "%"
+          }
+        },
+        order: [
+          ['name', 'ASC']
+        ]
+      })
+    } else {
+      gamesApi = allGames();
+      gamesDb = await Videogame.findAll({
+        include: Genres
+      })
+    }
+  Promise.all([
+    gamesApi,
+    gamesDb
+  ])
+  .then((a)=>{
+    const [gamesApi, gamesDb] = a
+    let filterGames=gamesApi.map((a)=>{
+      return {
+        id: a.id,
+        name: a.name,
+        background_image: a.background_image,
+        released: a.released,
+        ratings: ar.ratings.map(a=>a),
+        platforms: ar.platforms.map(a=>a),
+        genres: ar.genres.map(a=>a)
+      }
+    })
+    let VIDEOGAMES=[...filterGames, ...gamesDb]
+    res.send(VIDEOGAMES)
+  }) .catch((error)=> next(error)) */
+
+
+
+  
   /* const games = axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${name}`).then((e)=>{
     return e.data.results
   })
