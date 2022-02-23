@@ -139,15 +139,51 @@ router.post("/", postGames);
 
 
 
-const getById = async (req, res) => {
-  const {id} = req.params;
+const getById = async (req, res, next) => {
+
+try{
+  const {id}=req.params
+  let games
+  let data=[]
+  if(typeof id ==='string' && id.length > 8){
+    let response = await Videogame.findOne({
+      include: Genres,
+      where: {
+        id: id
+      }
+    })
+    games = response.dataValues
+  } else {
+    let response = await axios.get(`https://api.rawg.io/api/games/${id}?key=6d62af1479864f0cae7616fd7e10a7d2`)
+    const entries= Object.entries(response.data)
+    data.push(Object.fromEntries(entries))
+
+    const gamesData=data.map((game)=>{
+      return {
+        id: game.id,
+        name: game.name,
+        description: game.description,
+        released: game.released,
+        background_image: game.background_image,
+        rating: game.rating,
+        platforms: game.platforms.map(p=>p.platforms.name).join(', '),
+        genres: game.genres.map((a)=>a.name).join(', ')
+      }
+    })
+    games = gamesData[0]
+  }
+  res.send(games)
+} catch (error){next(error)}
+
+/*   const {id} = req.params;
   const allGames = await getAllInfo()
   if(id) {
     const gamesId = await allGames.filter(a=>a.id == id)
     gamesId.lenght ?
     res.status(200).json(gamesId) :
     res.status(400).send('No Se Encontro El Id')
-  }
+  } */
+
 }
 router.get("/:id", getById);
 
