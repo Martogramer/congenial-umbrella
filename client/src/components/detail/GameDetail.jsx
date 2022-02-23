@@ -8,7 +8,7 @@ import style from './GameDetail.module.css'
 const GameDetail=()=>{
 
     const dispatch=useDispatch()
-    const loadingLoad=useSelector(state=>state.loading)
+    const loadingLoad=useSelector((state)=>state.loading)
     const {id}=useParams()
 
     useEffect(()=>{
@@ -16,29 +16,32 @@ const GameDetail=()=>{
         dispatch(loading(true))
     }, [dispatch, id])
 
-    const gameOne = useSelector(state=>state.game)
+    const game = useSelector((store)=>store.game)
 
 return(
     <div className={style.wrapper}>
         <Link to={'/games'}>back</Link>
+        {console.log(game)}
+
+
         {!loadingLoad ?
             <div className={style.container}>
-                <img src={gameOne.background_image} alt=""/>
+                <img src={game.background_image} alt=""/>
                 <div className={style.content}>
-                    <h1>{gameOne.name}</h1>
-                    <p>{gameOne.description}</p>
+                    <h1>{game.name}</h1>
+                    <p>{game.description}</p>
                     <div className={style.content_detail}>
-                            <p><label>Released: </label>{gameOne.released}</p>
-                            <p><label>Rating: </label>{gameOne.rating}</p>
+                            <p><label>Released: </label>{game.released}</p>
+                            <p><label>Rating: </label>{game.rating}</p>
                             {
-                            (typeof gameOne.platforms === 'object')
-                            ? <p><label>Platforms: </label>{gameOne.platforms.join(', ')}</p>
-                            : <p><label>Platforms: </label>{gameOne.platforms}</p>
+                            (typeof game.platforms === 'object')
+                            ? <p><label>Platforms: </label>{game.platforms.join(', ')}</p>
+                            : <p><label>Platforms: </label>{game.platforms}</p>
         }
                             {
-                            (!gameOne.genres) 
-                            ?  <p><label>Genres: </label>{gameOne.genres}</p>
-                            :  <p><label>Genres: </label>{gameOne.genres.map((g) => g.name).join(', ')}</p>
+                            (!game.genres) 
+                            ?  <p><label>Genres: </label>{game.genres}</p>
+                            :  <p><label>Genres: </label>{game.genres.map((g) => g.name).join(', ')}</p>
         }
 
                     </div>
