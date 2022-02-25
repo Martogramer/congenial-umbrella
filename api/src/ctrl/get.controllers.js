@@ -33,7 +33,8 @@ const getApiInfo = async ()=> {
 }
 
 const getDbInfo = async ()=> {
-    const infoDb = await Videogame.findAll({
+    let infoDb = [];
+    infoDb = await Videogame.findAll({
         include: {
             model: Genres,
             attributes: ['name'],
