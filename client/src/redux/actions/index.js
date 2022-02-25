@@ -26,11 +26,12 @@ export function loading(payload){
 export function searchByName(payload){
     return async (dispatch)=>{
         try{
-            const res = await axios.get(`http://localhost:3001/games?name=${payload}`)
+            const res = await axios.get(`https://api.rawg.io/api/games?key=6d62af1479864f0cae7616fd7e10a7d2&search=${payload}`)
             dispatch({
                 type: SEARCH_GAMES,
-                payload: res.data.results
+                payload: res.data
             })
+            dispatch(loading(false))
         }catch(err){return err}
     }
 }
