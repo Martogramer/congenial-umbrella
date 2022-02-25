@@ -9,6 +9,7 @@ const Search=()=>{
     const [name, setName] = useState('')
 
     const handleInput=(e)=>{
+        e.preventDefault()
         setName(e.target.value)
     }
 
