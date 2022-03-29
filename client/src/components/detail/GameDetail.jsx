@@ -19,7 +19,7 @@ const GameDetail=()=>{
     const game = useSelector((store)=>store.game)
 
 return(
-    <div className={style.wrapper}>
+    <div className={style.algo}>
         <Link to={'/games'}>back</Link>
         {console.log(game)}
 

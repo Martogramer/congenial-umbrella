@@ -1,21 +1,20 @@
-.wrapper{
+.algo{
     display: grid;
 }
 
-.wrapper a{
+.algo{
     position: absolute;
     margin-left: 35px;
     font-family: var(--font-family);
     text-align: center;
-    background: #ff4820;
-    color: #fff;
+    background: #e67359;
+    color: rgb(219, 46, 46);
     border: none;
     cursor: pointer;
     outline: none;
     width: 60px;
     border-radius: 10px;
     margin-bottom: 20px;
-
 }
 
 .container{
